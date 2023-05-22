@@ -25,4 +25,5 @@ create table person
 alter table person
     owner to postgres;
 
-
+insert into role (role_id, name_of_role) values
+(1,'Client'),(2,'Insurance agency'),(3,'Estimator');
