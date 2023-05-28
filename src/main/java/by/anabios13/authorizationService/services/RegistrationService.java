@@ -34,19 +34,6 @@ public class RegistrationService {
         personRepository.save(person);
     }
 
-    public ResponseWithMessage performLogin(AuthenticationDTO authenticationDTO) throws AuthException {
-        try {
-            Person person = personRepository.findByLogin(authenticationDTO.getLogin()).orElseThrow(() -> new AuthException("Пользователь не найден"));
 
-            if(authenticationDTO.getLogin().equals(person.getLogin()) && passwordEncoder.matches(authenticationDTO.getPassword(),person.getPassword())){
-                String token = jwtUtil.generateToken(authenticationDTO.getLogin());
-                return new ResponseWithMessage(Map.of("jwt-token",token));
-            }else {
-                return new ResponseWithMessage(Map.of("message","Incorrect credentials"));
-            }
-        }catch (AuthException e){
-            return new ResponseWithMessage(Map.of("message","Incorrect credentials"));
-        }
-    }
 
 }

@@ -6,6 +6,7 @@ import by.anabios13.authorizationService.models.Person;
 import by.anabios13.authorizationService.models.Role;
 import by.anabios13.authorizationService.pojo.ResponseWithMessage;
 import by.anabios13.authorizationService.security.JWTUtil;
+import by.anabios13.authorizationService.services.AuthorizationService;
 import by.anabios13.authorizationService.services.PersonService;
 import by.anabios13.authorizationService.services.RegistrationService;
 import by.anabios13.authorizationService.services.RoleService;
@@ -25,17 +26,15 @@ public class AuthController {
     private final JWTUtil jwtUtil;
     private final RegistrationService registrationService;
     private final RoleService roleService;
-    private final PersonService personService;
-
-    private final PasswordEncoder passwordEncoder;
+    private final AuthorizationService authorizationService;
 
 
-    public AuthController(JWTUtil jwtUtil, RegistrationService registrationService, RoleService roleService, PersonService personService, PasswordEncoder passwordEncoder) {
+
+    public AuthController(JWTUtil jwtUtil, RegistrationService registrationService, RoleService roleService, AuthorizationService authorizationService) {
         this.jwtUtil = jwtUtil;
         this.registrationService = registrationService;
         this.roleService = roleService;
-        this.personService = personService;
-        this.passwordEncoder = passwordEncoder;
+        this.authorizationService = authorizationService;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,6 +53,6 @@ public class AuthController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseWithMessage performLogin(@RequestBody AuthenticationDTO authenticationDTO) throws AuthException {
-        return registrationService.performLogin(authenticationDTO);
+        return authorizationService.performLogin(authenticationDTO);
     }
 }
