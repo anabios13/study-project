@@ -23,6 +23,18 @@ public class Person {
     @NotNull
     private String login;
 
+    @Column(name = "password")
+    @NotNull
+    private String password;
+
+    @Column(name = "first_name")
+    @NotNull
+    private String firstName;
+
+    @Column(name = "last_name")
+    @NotNull
+    private String lastName;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,17 +103,4 @@ public class Person {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    @Column(name = "password")
-    @NotNull
-    private String password;
-
-    @Column(name = "first_name")
-    @NotNull
-    private String firstName;
-
-    @Column(name = "last_name")
-    @NotNull
-    private String lastName;
-
 }

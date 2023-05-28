@@ -1,15 +1,11 @@
 package by.anabios13.authorizationService.dto;
 
-import com.sun.istack.NotNull;
-
 public class PersonDTO {
 
-
-
     private int roleId;
-
-
-
+    private String password;
+    private String firstName;
+    private String lastName;
     private String login;
 
     public int getRoleId() {
@@ -52,14 +48,4 @@ public class PersonDTO {
         this.lastName = lastName;
     }
 
-
-    private String password;
-
-
-
-    private String firstName;
-
-
-    @NotNull
-    private String lastName;
 }
