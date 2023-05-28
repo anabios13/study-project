@@ -58,4 +58,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http)
+            throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(personDetailsService)
+                .passwordEncoder(getPasswordEncoder())
+                .and()
+                .build();
+    }
 }
