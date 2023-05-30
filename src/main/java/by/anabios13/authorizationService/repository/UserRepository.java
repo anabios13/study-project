@@ -1,14 +1,13 @@
 package by.anabios13.authorizationService.repository;
 
-import by.anabios13.authorizationService.models.Person;
+import by.anabios13.authorizationService.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person,Integer> {
+public interface UserRepository extends JpaRepository<User,Integer> {
 
-    Optional<Person> findByLogin(String string);
+    Optional<User> findByLogin(String string);
 }

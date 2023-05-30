@@ -1,6 +1,6 @@
 package by.anabios13.authorizationService.dto;
 
-public class PersonDTO {
+public class UserDTO {
 
     private int roleId;
     private String password;

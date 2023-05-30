@@ -1,7 +1,7 @@
 package by.anabios13.authorizationService.filters;
 
 import by.anabios13.authorizationService.security.JWTUtil;
-import by.anabios13.authorizationService.services.PersonDetailsService;
+import by.anabios13.authorizationService.services.UserDetailsService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,11 +17,11 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
-    private final PersonDetailsService personDetailsServiceService;
+    private final UserDetailsService userDetailsServiceService;
 
-    public JWTFilter(JWTUtil jwtUtil, PersonDetailsService personDetailsServiceService) {
+    public JWTFilter(JWTUtil jwtUtil, UserDetailsService userDetailsServiceService) {
         this.jwtUtil = jwtUtil;
-        this.personDetailsServiceService = personDetailsServiceService;
+        this.userDetailsServiceService = userDetailsServiceService;
     }
 
 

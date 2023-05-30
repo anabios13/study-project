@@ -1,17 +1,17 @@
 package by.anabios13.authorizationService.controllers;
 
-import by.anabios13.authorizationService.services.PersonService;
+import by.anabios13.authorizationService.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class PersonController {
-private final PersonService personService;
+public class UserController {
+private final UserService userService;
 
-    public PersonController(PersonService personService) {
-        this.personService = personService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/client")

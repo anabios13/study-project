@@ -1,6 +1,6 @@
 package by.anabios13.authorizationService.security;
 
-import by.anabios13.authorizationService.services.PersonDetailsService;
+import by.anabios13.authorizationService.services.UserDetailsService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,7 +22,7 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
-    private final PersonDetailsService personDetailsService;
+    private final UserDetailsService userDetailsService;
     @Value("${jwt_secret}")
     private String secretWord;
 
@@ -38,8 +38,8 @@ public class JWTUtil {
                 build();
     }
 
-    public JWTUtil(PersonDetailsService personDetailsService) {
-        this.personDetailsService = personDetailsService;
+    public JWTUtil(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     public String generateToken(String login){
@@ -69,7 +69,7 @@ public class JWTUtil {
     }
 
     public Authentication getAuthentication(String token){
-        UserDetails userDetails = this.personDetailsService.loadUserByUsername(validateTokenAndRetrieveClaim(token));
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(validateTokenAndRetrieveClaim(token));
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
     }
 
