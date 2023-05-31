@@ -10,14 +10,13 @@ import by.anabios13.authorizationService.services.AuthorizationService;
 import by.anabios13.authorizationService.services.RegistrationService;
 import by.anabios13.authorizationService.services.RoleService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.AuthException;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -50,7 +49,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseWithMessage performLogin(@RequestBody AuthenticationDTO authenticationDTO) throws AuthException {
+    public ResponseEntity<?> performLogin(@RequestBody AuthenticationDTO authenticationDTO) throws AuthException {
         return authorizationService.performLogin(authenticationDTO);
     }
 }

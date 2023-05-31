@@ -33,7 +33,7 @@ public class JWTUtil {
     @PostConstruct
     private void initVerifier() {
          verifier = JWT.require(Algorithm.HMAC256(secretWord)).
-                withSubject("User details").
+                withSubject("Person details").
                 withIssuer("authService").
                 build();
     }
@@ -44,7 +44,7 @@ public class JWTUtil {
 
     public String generateToken(String login){
         Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(timeOfExpirationInMinutes).toInstant());
-        return JWT.create().withSubject("User details").
+        return JWT.create().withSubject("Person details").
                 withClaim("login",login).
                 withIssuer("authService").
                 withIssuedAt(new Date()).
