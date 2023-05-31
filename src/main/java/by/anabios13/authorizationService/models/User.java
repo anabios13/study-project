@@ -13,7 +13,7 @@ public class User {
     @Id
     @Column(name = "person_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int personId;
+    private int userId;
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
@@ -56,12 +56,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getPersonId() {
-        return personId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Role getRole() {

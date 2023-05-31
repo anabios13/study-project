@@ -20,8 +20,8 @@ public class UserService {
     }
 
     public User findOne(int id) {
-        Optional<User> foundPerson = userRepository.findById(id);
-        return foundPerson.orElse(null);
+        Optional<User> foundUser = userRepository.findById(id);
+        return foundUser.orElse(null);
     }
 
     @Transactional
@@ -31,13 +31,13 @@ public class UserService {
 
     @Transactional
     public void update(int id, User updatedUser) {
-        updatedUser.setPersonId(id);
+        updatedUser.setUserId(id);
         userRepository.save(updatedUser);
     }
 
     public Optional<User> findUserByLogin(String login) throws UsernameNotFoundException {
-        Optional<User> person = userRepository.findByLogin(login);
-        return person;
+        Optional<User> user = userRepository.findByLogin(login);
+        return user;
     }
 
     @Transactional
