@@ -6,12 +6,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "person")
+@Table(name = "users")
 public class User {
     public User(){}
 
     @Id
-    @Column(name = "person_id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 

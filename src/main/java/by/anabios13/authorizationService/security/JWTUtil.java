@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
@@ -51,7 +50,7 @@ public class JWTUtil {
                 withExpiresAt(expirationDate).
                 sign(Algorithm.HMAC256(secretWord));
     }
-    public String validateTokenAndRetrieveClaim(String token) throws JWTVerificationException {
+    public String validateTokenAndRetrieveClaimLogin(String token) throws JWTVerificationException {
         try {
             DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaim("login").asString();
@@ -63,13 +62,13 @@ public class JWTUtil {
     public String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");
         if(bearerToken !=null && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7,bearerToken.length());
+            return bearerToken.substring(7);
         }
         return null;
     }
 
     public Authentication getAuthentication(String token){
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(validateTokenAndRetrieveClaim(token));
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(validateTokenAndRetrieveClaimLogin(token));
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
     }
 

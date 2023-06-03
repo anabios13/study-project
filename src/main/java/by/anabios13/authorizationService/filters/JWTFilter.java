@@ -1,7 +1,6 @@
 package by.anabios13.authorizationService.filters;
 
 import by.anabios13.authorizationService.security.JWTUtil;
-import by.anabios13.authorizationService.services.UserDetailsService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,11 +16,9 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
-    private final UserDetailsService userDetailsServiceService;
 
-    public JWTFilter(JWTUtil jwtUtil, UserDetailsService userDetailsServiceService) {
+    public JWTFilter(JWTUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        this.userDetailsServiceService = userDetailsServiceService;
     }
 
 
@@ -29,7 +26,7 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = jwtUtil.resolveToken(request);
-        if(token!=null && jwtUtil.validateTokenAndRetrieveClaim(token)!=null){
+        if(token!=null && jwtUtil.validateTokenAndRetrieveClaimLogin(token)!=null){
             Authentication authentication = jwtUtil.getAuthentication(token);
             if(authentication!=null){
                 SecurityContextHolder.getContext().setAuthentication(authentication);
