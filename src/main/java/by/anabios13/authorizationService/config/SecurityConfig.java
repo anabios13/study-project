@@ -1,15 +1,15 @@
 package by.anabios13.authorizationService.config;
 
 import by.anabios13.authorizationService.filters.JWTFilter;
+import by.anabios13.authorizationService.repository.UserRepository;
+import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,12 +21,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
     private final JWTFilter jwtFilter;
+    private final JWTUtil jwtUtil;
+
+
+
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, JWTFilter jwtFilter) {
+    public SecurityConfig(UserDetailsService userDetailsService, UserRepository userRepository, JWTFilter jwtFilter, JWTUtil jwtUtil) {
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
         this.jwtFilter = jwtFilter;
+        this.jwtUtil = jwtUtil;
     }
 
     @Bean
@@ -56,8 +63,20 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+    @Bean
+    public AuthenticationManager authenticationManager()
+            throws Exception {
+        var authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
+        return new ProviderManager(authenticationProvider);
+    }
+
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
