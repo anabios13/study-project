@@ -8,10 +8,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +18,7 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
-    private final UserDetailsService userDetailsService;
+
     @Value("${jwt_secret}")
     private String secretWord;
 
@@ -38,9 +34,6 @@ public class JWTUtil {
                 build();
     }
 
-    public JWTUtil(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     public String generateToken(String login){
         Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(timeOfExpirationInMinutes).toInstant());

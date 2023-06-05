@@ -5,7 +5,6 @@ import by.anabios13.authorizationService.models.Role;
 import by.anabios13.authorizationService.models.User;
 import by.anabios13.authorizationService.repository.RoleRepository;
 import by.anabios13.authorizationService.repository.UserRepository;
-import by.anabios13.authorizationService.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
