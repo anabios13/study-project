@@ -22,7 +22,7 @@ create table users
     last_name  varchar(200) not null
 );
 
-alter table person
+alter table users
     owner to postgres;
 
 insert into role (role_id, name_of_role) values

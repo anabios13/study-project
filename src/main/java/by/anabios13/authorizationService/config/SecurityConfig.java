@@ -48,15 +48,6 @@ public class SecurityConfig {
                 .antMatchers("/auth/login", "/auth/registration", "/error", "/api/hello", "/show").permitAll()
                 .anyRequest().hasAnyRole("Client", "Insurance agency", "Estimator")
                 .and()
-                .formLogin().loginPage("/auth/login")
-                .loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/hello", true)
-                .failureUrl("/auth/login?error")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/auth/login")
-                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
