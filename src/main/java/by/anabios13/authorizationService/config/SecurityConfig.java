@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,19 +17,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private UserDetailsService userDetailsService;
-    private final JWTFilter jwtFilter;
 
 
 
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService,JWTFilter jwtFilter) {
+    public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.jwtFilter = jwtFilter;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,JWTFilter jwtFilter) throws Exception {
 
         http
                 .csrf().disable()
@@ -52,16 +48,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager()
             throws Exception {
-        var authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
-        return new ProviderManager(authenticationProvider);
+        return new EncryptedPasswordAuthenticationManager(userDetailsService,getPasswordEncoder());
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new JWTTokenEncoderProxy();
     }
-
-
 }
