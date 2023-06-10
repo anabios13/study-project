@@ -1,8 +1,6 @@
 package by.anabios13.authorizationService.config;
 
 import by.anabios13.authorizationService.filters.JWTFilter;
-import by.anabios13.authorizationService.repository.UserRepository;
-import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,22 +20,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private UserDetailsService userDetailsService;
-    private final UserRepository userRepository;
-    private final JWTFilter jwtFilter;
-    private final JWTUtil jwtUtil;
 
 
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, UserRepository userRepository, JWTFilter jwtFilter, JWTUtil jwtUtil) {
+    public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.userRepository = userRepository;
-        this.jwtFilter = jwtFilter;
-        this.jwtUtil = jwtUtil;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,JWTFilter jwtFilter) throws Exception {
 
         http
                 .csrf().disable()
@@ -66,7 +58,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new JWTTokenEncoderProxy(new BCryptPasswordEncoder());
     }
 
 
