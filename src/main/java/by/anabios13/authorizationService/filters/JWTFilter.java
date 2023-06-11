@@ -1,7 +1,6 @@
 package by.anabios13.authorizationService.filters;
 
 import by.anabios13.authorizationService.security.JWTUtil;
-import by.anabios13.authorizationService.services.UserDetailsService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

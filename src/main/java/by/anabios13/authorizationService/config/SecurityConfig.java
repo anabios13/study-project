@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -34,11 +35,10 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/client").hasRole("Client")
-                .antMatchers("/insurance_agency").hasRole("Insurance agency")
-                .antMatchers("/Estimator").hasRole("Estimator")
+                .antMatchers("/api/client").hasRole("Client")
+                .antMatchers("/api/insurance_agency").hasRole("Insurance agency")
+                .antMatchers("/api/Estimator").hasRole("Estimator")
                 .antMatchers("/auth/login", "/auth/registration", "/error", "/api/hello", "/show").permitAll()
-                .anyRequest().hasAnyRole("Client", "Insurance agency", "Estimator")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -48,12 +48,8 @@ public class SecurityConfig {
 
 
     @Bean
-    public AuthenticationManager authenticationManager()
-            throws Exception {
-        var authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
-        return new ProviderManager(authenticationProvider);
+    public AuthenticationManager authenticationManager() throws Exception {
+        return new ProviderManager(Arrays.asList(new CustomAuthenticationProvider(userDetailsService, getPasswordEncoder())));
     }
 
     @Bean
