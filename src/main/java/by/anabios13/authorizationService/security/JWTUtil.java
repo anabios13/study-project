@@ -1,18 +1,15 @@
 package by.anabios13.authorizationService.security;
 
-import by.anabios13.authorizationService.services.UserDetailsService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -48,8 +45,8 @@ public class JWTUtil {
         try {
             DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaim("login").asString();
-        }catch (TokenExpiredException | IllegalArgumentException e){
-            throw new TokenExpiredException("JWT token is expired", Instant.now());
+        } catch (JWTVerificationException | IllegalArgumentException e) {
+            throw new JWTVerificationException("JWT token is invalid or expired");
         }
     }
 

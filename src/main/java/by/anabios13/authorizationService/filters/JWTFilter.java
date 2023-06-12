@@ -1,6 +1,7 @@
 package by.anabios13.authorizationService.filters;
 
 import by.anabios13.authorizationService.security.JWTUtil;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,15 +31,23 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-            String token = jwtUtil.resolveToken(request);
-            if (token != null && jwtUtil.validateTokenAndRetrieveClaimLogin(token) != null) {
+        String token = jwtUtil.resolveToken(request);
+        if (token != null) {
+            try {
+                String username = jwtUtil.validateTokenAndRetrieveClaimLogin(token);
                 if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                    String username = jwtUtil.validateTokenAndRetrieveClaimLogin(token);
                     Authentication authentication = new UsernamePasswordAuthenticationToken(username, null);
                     authentication = authenticationManager.authenticate(authentication);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
+                filterChain.doFilter(request, response);
+            } catch (JWTVerificationException e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
-            filterChain.doFilter(request, response);
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
     }
+}
