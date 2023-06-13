@@ -39,11 +39,11 @@ class RegistrationServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testPerformRegistration_SuccessfulRegistration() {
+    void testPerformRegistrationSuccessfulRegistration() {
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("John");
@@ -77,7 +77,7 @@ class RegistrationServiceTest {
     }
 
     @Test
-    void testPerformRegistration_DuplicateUsername() {
+    void testPerformRegistrationDuplicateUsername() {
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("John");
