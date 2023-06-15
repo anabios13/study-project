@@ -4,6 +4,7 @@ import by.anabios13.authorizationService.dto.AuthResponseDTO;
 import by.anabios13.authorizationService.dto.AuthenticationDTO;
 import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.AuthorizationService;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,11 +16,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -42,11 +41,11 @@ class AuthorizationServiceTest {
     void performLoginValidCredentialsReturnsSuccessfulResponse() {
 
         AuthenticationDTO authenticationDTO = new AuthenticationDTO("username", "password");
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_Client"));
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authenticationDTO.getLogin(), authenticationDTO.getPassword());
         Authentication authentication = mock(Authentication.class);
+        Collection grantedAuthorities = Lists.newArrayList(new SimpleGrantedAuthority("ROLE_Client"));
         when(authenticationManager.authenticate(authenticationToken)).thenReturn(authentication);
-        doReturn(authorities).when(authentication).getAuthorities();
+        when(authentication.getAuthorities()).thenReturn(grantedAuthorities);
         when(jwtUtil.generateToken(authenticationDTO.getLogin())).thenReturn("token");
 
         ResponseEntity<AuthResponseDTO> response = authorizationService.performLogin(authenticationDTO);
