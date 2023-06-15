@@ -6,6 +6,7 @@ import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.AuthorizationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
@@ -29,12 +30,12 @@ class AuthorizationServiceTest {
     @Mock
     private JWTUtil jwtUtil;
 
+    @InjectMocks
     private AuthorizationService authorizationService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        authorizationService = new AuthorizationService(authenticationManager, jwtUtil);
     }
 
     @Test
@@ -85,5 +86,9 @@ class AuthorizationServiceTest {
         assertNull(response.getBody().getRole());
 
         verify(authenticationManager).authenticate(authenticationToken);
+    }
+
+    void tearDown(){
+        verifyNoMoreInteractions(authenticationManager,jwtUtil);
     }
 }

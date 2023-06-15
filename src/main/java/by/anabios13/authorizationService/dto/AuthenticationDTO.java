@@ -1,9 +1,10 @@
 package by.anabios13.authorizationService.dto;
 
 public class AuthenticationDTO {
-    public AuthenticationDTO() {}
     private String login;
     private String password;
+
+    public AuthenticationDTO() {}
 
     public String getLogin() {
         return login;
