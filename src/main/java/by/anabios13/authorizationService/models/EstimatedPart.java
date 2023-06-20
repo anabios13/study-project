@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "estimated_parts")
-public class EstimatedParts {
+public class EstimatedPart {
     @Id
     @Column(name = "estimated_part_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,7 @@ public class EstimatedParts {
 
     @ManyToOne
     @JoinColumn(name = "type_of_parts_id", referencedColumnName = "type_of_parts_id")
-    private TypeOfParts typeOfParts;
+    private TypeOfParts typeOfPart;
 
     @Column(name = "description")
     private String description;
@@ -32,19 +32,19 @@ public class EstimatedParts {
     @JoinColumn(name = "supplement_id", referencedColumnName = "supplement_id")
     private Supplement supplement;
 
-    public EstimatedParts (){}
+    public EstimatedPart(){}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EstimatedParts that = (EstimatedParts) o;
-        return Objects.equals(typeOfParts, that.typeOfParts) && Objects.equals(description, that.description) && Objects.equals(labor_hours, that.labor_hours) && Objects.equals(price, that.price) && Objects.equals(laborRate, that.laborRate) && Objects.equals(supplement, that.supplement);
+        EstimatedPart that = (EstimatedPart) o;
+        return Objects.equals(typeOfPart, that.typeOfPart) && Objects.equals(description, that.description) && Objects.equals(labor_hours, that.labor_hours) && Objects.equals(price, that.price) && Objects.equals(laborRate, that.laborRate) && Objects.equals(supplement, that.supplement);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(typeOfParts, description, labor_hours, price, laborRate, supplement);
+        return Objects.hash(typeOfPart, description, labor_hours, price, laborRate, supplement);
     }
 
     public int getEstimatedPartId() {
@@ -55,12 +55,12 @@ public class EstimatedParts {
         this.estimatedPartId = estimatedPartId;
     }
 
-    public TypeOfParts getTypeOfParts() {
-        return typeOfParts;
+    public TypeOfParts getTypeOfPart() {
+        return typeOfPart;
     }
 
-    public void setTypeOfParts(TypeOfParts typeOfParts) {
-        this.typeOfParts = typeOfParts;
+    public void setTypeOfPart(TypeOfParts typeOfParts) {
+        this.typeOfPart = typeOfParts;
     }
 
     public String getDescription() {

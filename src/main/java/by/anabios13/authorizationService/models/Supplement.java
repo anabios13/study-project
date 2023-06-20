@@ -22,7 +22,7 @@ public class Supplement {
     private OtherCharges otherCharges;
 
     @OneToMany(mappedBy = "supplement")
-    private List<EstimatedParts> estimatedParts;
+    private List<EstimatedPart> estimatedParts;
 
     public Supplement(){}
 
@@ -34,11 +34,11 @@ public class Supplement {
         return Objects.equals(assignment, that.assignment) && Objects.equals(otherCharges, that.otherCharges);
     }
 
-    public List<EstimatedParts> getEstimatedParts() {
+    public List<EstimatedPart> getEstimatedParts() {
         return estimatedParts;
     }
 
-    public void setEstimatedParts(List<EstimatedParts> estimatedParts) {
+    public void setEstimatedParts(List<EstimatedPart> estimatedParts) {
         this.estimatedParts = estimatedParts;
     }
 
