@@ -3,6 +3,7 @@ package by.anabios13.authorizationService.models;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +12,7 @@ public class Assignment {
     @Id
     @Column(name = "assignment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int assignmentId;
+    private Long assignmentId;
 
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
@@ -20,6 +21,17 @@ public class Assignment {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User client;
+
+    @OneToOne
+    @JoinColumn(name = "vehicle_information_id")
+    private VehicleInformation vehicleInformation;
+
+    @OneToOne
+    @JoinColumn(name = "vehicle_condition_id")
+    private VehicleInformation vehicleCondition;
+
+    @OneToMany(mappedBy = "assignment")
+    private List<Contacts> contacts;
 
     @Column(name = "price")
     private BigDecimal price;
@@ -40,16 +52,40 @@ public class Assignment {
         return assignmentId == that.assignmentId && Objects.equals(status, that.status) && Objects.equals(client, that.client) && Objects.equals(price, that.price) && Objects.equals(note, that.note) && Objects.equals(dateOfIncident, that.dateOfIncident);
     }
 
+    public VehicleInformation getVehicleInformation() {
+        return vehicleInformation;
+    }
+
+    public void setVehicleInformation(VehicleInformation vehicleInformation) {
+        this.vehicleInformation = vehicleInformation;
+    }
+
+    public VehicleInformation getVehicleCondition() {
+        return vehicleCondition;
+    }
+
+    public void setVehicleCondition(VehicleInformation vehicleCondition) {
+        this.vehicleCondition = vehicleCondition;
+    }
+
+    public List<Contacts> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contacts> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(assignmentId, status, client, price, note, dateOfIncident);
     }
 
-    public int getAssignmentId() {
+    public long getAssignmentId() {
         return assignmentId;
     }
 
-    public void setAssignmentId(int assignmentId) {
+    public void setAssignmentId(long assignmentId) {
         this.assignmentId = assignmentId;
     }
 
