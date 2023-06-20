@@ -42,11 +42,11 @@ public class JWTFilter extends OncePerRequestFilter {
                 }
                 filterChain.doFilter(request, response);
             } catch (JWTVerificationException e) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                filterChain.doFilter(request, response);
                 return;
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            filterChain.doFilter(request, response);
             return;
         }
     }
