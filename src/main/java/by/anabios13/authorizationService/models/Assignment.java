@@ -42,6 +42,10 @@ public class Assignment {
     @Column(name = "date_of_incident")
     private Date dateOfIncident;
 
+    @OneToOne
+    @JoinColumn(name = "supplement_id")
+    private Supplement supplement;
+
     public Assignment(){}
 
     @Override
@@ -50,6 +54,23 @@ public class Assignment {
         if (o == null || getClass() != o.getClass()) return false;
         Assignment that = (Assignment) o;
         return assignmentId == that.assignmentId && Objects.equals(status, that.status) && Objects.equals(client, that.client) && Objects.equals(price, that.price) && Objects.equals(note, that.note) && Objects.equals(dateOfIncident, that.dateOfIncident);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(assignmentId, status, client, price, note, dateOfIncident);
+    }
+
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+
+    public Supplement getSupplement() {
+        return supplement;
+    }
+
+    public void setSupplement(Supplement supplement) {
+        this.supplement = supplement;
     }
 
     public VehicleInformation getVehicleInformation() {
@@ -74,11 +95,6 @@ public class Assignment {
 
     public void setContacts(List<Contacts> contacts) {
         this.contacts = contacts;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(assignmentId, status, client, price, note, dateOfIncident);
     }
 
     public long getAssignmentId() {

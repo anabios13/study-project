@@ -54,6 +54,14 @@ public class Contacts {
         return Objects.hash(assignment, typeOfContact, firstname, lastname, email, note);
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     public List<Phone> getPhones() {
         return phones;
     }
