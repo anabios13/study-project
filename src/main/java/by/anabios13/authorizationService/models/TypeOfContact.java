@@ -11,7 +11,7 @@ public class TypeOfContact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int typeOfContactId;
 
-    @Column(name = "name_of_contact)")
+    @Column(name = "name_of_contact")
     private String name;
 
     public TypeOfContact(){}

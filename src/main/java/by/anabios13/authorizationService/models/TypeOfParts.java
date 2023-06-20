@@ -12,7 +12,7 @@ public class TypeOfParts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int typeOfPartsId;
 
-    @Column(name = "name_of_type)")
+    @Column(name = "name_of_type")
     private String name;
 
     public TypeOfParts(){}
