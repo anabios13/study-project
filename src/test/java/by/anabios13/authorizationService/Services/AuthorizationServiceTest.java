@@ -2,8 +2,11 @@ package by.anabios13.authorizationService.Services;
 
 import by.anabios13.authorizationService.dto.AuthResponseDTO;
 import by.anabios13.authorizationService.dto.AuthenticationDTO;
+import by.anabios13.authorizationService.models.User;
 import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.AuthorizationService;
+import by.anabios13.authorizationService.services.UserDetailsService;
+import by.anabios13.authorizationService.services.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -28,6 +32,9 @@ class AuthorizationServiceTest {
     private AuthenticationManager authenticationManager;
     @Mock
     private JWTUtil jwtUtil;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private AuthorizationService authorizationService;
@@ -39,11 +46,14 @@ class AuthorizationServiceTest {
 
     @Test
     void performLoginValidCredentialsReturnsSuccessfulResponse() {
-
+        User user = new User();
+        user.setFirstName("John");
+        user.setLastName("Smith");
         AuthenticationDTO authenticationDTO = new AuthenticationDTO("username", "password");
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authenticationDTO.getLogin(), authenticationDTO.getPassword());
         Authentication authentication = mock(Authentication.class);
         Collection grantedAuthorities = Lists.newArrayList(new SimpleGrantedAuthority("ROLE_Client"));
+        when(userService.findUserByLogin("username")).thenReturn(Optional.of(user));
         when(authenticationManager.authenticate(authenticationToken)).thenReturn(authentication);
         when(authentication.getAuthorities()).thenReturn(grantedAuthorities);
         when(jwtUtil.generateToken(authenticationDTO.getLogin())).thenReturn("token");
@@ -54,9 +64,12 @@ class AuthorizationServiceTest {
         assertNotNull(response.getBody());
         assertEquals("Login successful", response.getBody().getMessage());
         assertEquals("[ROLE_Client]", response.getBody().getRole());
+        assertEquals("John", response.getBody().getFirstname());
+        assertEquals("Smith", response.getBody().getLastName());
 
         verify(authenticationManager).authenticate(authenticationToken);
         verify(jwtUtil).generateToken(authenticationDTO.getLogin());
+        verify(userService).findUserByLogin("username");
     }
 
     @Test

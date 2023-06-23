@@ -3,6 +3,7 @@ package by.anabios13.authorizationService.models;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +35,28 @@ public class User {
     @Column(name = "last_name")
     @NotNull
     private String lastName;
+
+    @Column(name = "insurance_company")
+    private String insuranceCompany;
+
+    @Column(name = "insurance_expiry_date")
+    private Date insuranceExpireDate;
+
+    public String getInsuranceCompany() {
+        return insuranceCompany;
+    }
+
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany;
+    }
+
+    public Date getInsuranceExpireDate() {
+        return insuranceExpireDate;
+    }
+
+    public void setInsuranceExpireDate(Date insuranceExpireDate) {
+        this.insuranceExpireDate = insuranceExpireDate;
+    }
 
     public User(){}
 
