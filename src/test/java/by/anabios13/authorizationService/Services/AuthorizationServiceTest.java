@@ -3,6 +3,7 @@ package by.anabios13.authorizationService.Services;
 import by.anabios13.authorizationService.dto.AuthResponseDTO;
 import by.anabios13.authorizationService.dto.AuthenticationDTO;
 import by.anabios13.authorizationService.models.User;
+import by.anabios13.authorizationService.repository.UserRepository;
 import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.AuthorizationService;
 import by.anabios13.authorizationService.services.UserDetailsService;
@@ -34,7 +35,7 @@ class AuthorizationServiceTest {
     private JWTUtil jwtUtil;
 
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
 
     @InjectMocks
     private AuthorizationService authorizationService;
@@ -53,7 +54,7 @@ class AuthorizationServiceTest {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authenticationDTO.getLogin(), authenticationDTO.getPassword());
         Authentication authentication = mock(Authentication.class);
         Collection grantedAuthorities = Lists.newArrayList(new SimpleGrantedAuthority("ROLE_Client"));
-        when(userService.findUserByLogin("username")).thenReturn(Optional.of(user));
+        when(userRepository.findByLogin("username")).thenReturn(Optional.of(user));
         when(authenticationManager.authenticate(authenticationToken)).thenReturn(authentication);
         when(authentication.getAuthorities()).thenReturn(grantedAuthorities);
         when(jwtUtil.generateToken(authenticationDTO.getLogin())).thenReturn("token");
@@ -69,7 +70,7 @@ class AuthorizationServiceTest {
 
         verify(authenticationManager).authenticate(authenticationToken);
         verify(jwtUtil).generateToken(authenticationDTO.getLogin());
-        verify(userService).findUserByLogin("username");
+        verify(userRepository).findByLogin("username");
     }
 
     @Test
