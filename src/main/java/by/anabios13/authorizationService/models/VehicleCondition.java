@@ -11,7 +11,7 @@ public class VehicleCondition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vehicleConditionId;
 
-    @OneToOne(mappedBy = "vehicleCondition")
+    @OneToOne(mappedBy = "vehicleCondition",cascade = CascadeType.ALL)
     private Assignment assignment;
 
     @Column(name = "impact_direction")

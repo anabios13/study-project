@@ -11,9 +11,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_id",referencedColumnName = "contact_id")
-    private Contacts contact;
+    private Contact contact;
 
     @Column(name = "city")
     private String city;
@@ -32,6 +32,15 @@ public class Address {
     private TypeOfAddress typeOfAddress;
 
     public Address(){}
+
+        public Address(Contact contact, String city, String state, String zip, String note, TypeOfAddress typeOfAddress) {
+        this.contact = contact;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.note = note;
+        this.typeOfAddress = typeOfAddress;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,11 +63,11 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public Contacts getContact() {
+    public Contact getContact() {
         return contact;
     }
 
-    public void setContact(Contacts contact) {
+    public void setContact(Contact contact) {
         this.contact = contact;
     }
 

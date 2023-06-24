@@ -6,14 +6,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "contacts")
-public class Contacts {
+public class Contact {
 
     @Id
     @Column(name = "contact_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int contactId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assignment_id",referencedColumnName = "assignment_id")
     private Assignment assignment;
 
@@ -21,10 +21,10 @@ public class Contacts {
     @JoinColumn(name = "type_of_contact_id",referencedColumnName = "type_of_contact_id")
     private TypeOfContact typeOfContact;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact",cascade = CascadeType.ALL)
     private List<Phone> phones;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
     private List<Address> addresses;
 
     @Column(name = "firstname")
@@ -39,14 +39,32 @@ public class Contacts {
     @Column(name = "note")
     private String note;
 
-    public Contacts(){}
+    public Contact(){}
+
+    public Contact(Assignment assignment,
+                   TypeOfContact typeOfContact,
+                   List<Phone> phones,
+                   List<Address> addresses,
+                   String firstname,
+                   String lastname,
+                   String email,
+                   String note) {
+        this.assignment = assignment;
+        this.typeOfContact = typeOfContact;
+        this.phones = phones;
+        this.addresses = addresses;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.note = note;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Contacts contacts = (Contacts) o;
-        return Objects.equals(assignment, contacts.assignment) && Objects.equals(typeOfContact, contacts.typeOfContact) && Objects.equals(firstname, contacts.firstname) && Objects.equals(lastname, contacts.lastname) && Objects.equals(email, contacts.email) && Objects.equals(note, contacts.note);
+        Contact contact = (Contact) o;
+        return Objects.equals(assignment, contact.assignment) && Objects.equals(typeOfContact, contact.typeOfContact) && Objects.equals(firstname, contact.firstname) && Objects.equals(lastname, contact.lastname) && Objects.equals(email, contact.email) && Objects.equals(note, contact.note);
     }
 
     @Override

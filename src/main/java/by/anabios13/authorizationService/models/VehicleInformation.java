@@ -12,7 +12,7 @@ public class VehicleInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vehicleInformationId;
 
-    @OneToOne(mappedBy = "vehicleInformation")
+    @OneToOne(mappedBy = "vehicleInformation",cascade = CascadeType.PERSIST)
     private Assignment assignment;
 
     @Column(name = "vin")
