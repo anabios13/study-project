@@ -25,4 +25,6 @@ public class ImpactDirectionService {
 
     @Transactional
     public void save(ImpactDirection impactDirection){impactDirectionRepository.save(impactDirection);}
+
+
 }

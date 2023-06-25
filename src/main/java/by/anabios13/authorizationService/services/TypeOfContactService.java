@@ -5,6 +5,7 @@ import by.anabios13.authorizationService.repository.TypeOfContactRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,9 +17,14 @@ public class TypeOfContactService {
     }
 
     @Transactional
-    public void save(TypeOfContact typeOfContact){typeOfContactRepository.save(typeOfContact);}
-    public TypeOfContact findByName(String name){
-        Optional<TypeOfContact> typeOfContact= typeOfContactRepository.findByName(name);
-    return typeOfContact.orElse(null);
+    public void save(TypeOfContact typeOfContact) {
+        typeOfContactRepository.save(typeOfContact);
     }
+
+    public TypeOfContact findByName(String name) {
+        Optional<TypeOfContact> typeOfContact = typeOfContactRepository.findByName(name);
+        return typeOfContact.orElse(null);
+    }
+
+    public List<TypeOfContact> findAll(){return typeOfContactRepository.findAll();}
 }

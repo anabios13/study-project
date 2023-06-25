@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class NewAssignmentService {
         this.impactDirectionService = impactDirectionService;
     }
 
-    public ResponseEntity<?> createAssignment(AssignmentDTO assignmentDTO) {
+    public ResponseEntity<String> createAssignment(AssignmentDTO assignmentDTO) {
         Assignment assignment = new Assignment();
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

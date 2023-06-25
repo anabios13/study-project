@@ -33,16 +33,4 @@ public class UserController {
     public String showHello(){
         return "Hello";
     }
-
-    @GetMapping("/client/test")
-    public VehicleConditionDTO showVehicleCond(){
-        ImpactDirectionDTO impactDirectionDTO = new ImpactDirectionDTO();
-        impactDirectionDTO.setName("asdasd");
-        ImpactDirectionDTO impactDirectionDTO1 = new ImpactDirectionDTO();
-        impactDirectionDTO.setName("asdasd1");
-        List<ImpactDirectionDTO> list = new ArrayList<>();
-        list.add(impactDirectionDTO);
-        list.add(impactDirectionDTO1);
-        return new VehicleConditionDTO(list,null);
-    }
 }
