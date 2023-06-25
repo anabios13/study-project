@@ -21,9 +21,10 @@ public class StatusService {
         statusRepository.save(status);
     }
 
-    public Status findByIdAndReturnNameOfStatus(int id) {
+    public Status findById(int id) {
         Optional<Status> foundStatus = statusRepository.findById(id);
         return foundStatus.orElse(null);
     }
+
 }
 

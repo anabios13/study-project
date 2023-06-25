@@ -21,6 +21,9 @@ public class VehicleInformation {
     @Column(name = "year")
     private int year;
 
+    @Column(name = "model")
+    private String model;
+
     @Column(name = "make_in")
     private String makeIn;
 
@@ -49,6 +52,14 @@ public class VehicleInformation {
     @Override
     public int hashCode() {
         return Objects.hash(assignment, vin, year, makeIn, licensePart, licenseState, licenseExpiration, odometerValue);
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public int getVehicleInformationId() {

@@ -2,7 +2,6 @@ package by.anabios13.authorizationService.controllers;
 
 import by.anabios13.authorizationService.dto.*;
 import by.anabios13.authorizationService.models.*;
-import by.anabios13.authorizationService.repository.TypeOfContactRepository;
 import by.anabios13.authorizationService.security.UserDetails;
 import by.anabios13.authorizationService.services.*;
 import org.modelmapper.ModelMapper;
@@ -29,14 +28,18 @@ public class ClientController {
     private final AddressService addressService;
     private final PhoneService phoneService;
     private final ContactService contactService;
+    private final StatusService statusService;
+    private final ImpactDirectionService impactDirectionService;
 
     public ClientController(UserDetailsService userDetailsService,
                             AssignmentService assignmentService,
                             VehicleInformationService vehicleInformationService,
                             VehicleConditionService vehicleConditionService,
                             TypeOfContactService typeOfContactService,
-                            TypeOfContactService typeOfContactService1, AddressService addressService,
-                            PhoneService phoneService, ContactService contactService) {
+                            AddressService addressService,
+                            PhoneService phoneService,
+                            ContactService contactService,
+                            StatusService statusService, ImpactDirectionService impactDirectionService) {
         this.userDetailsService = userDetailsService;
         this.assignmentService = assignmentService;
         this.vehicleInformationService = vehicleInformationService;
@@ -45,21 +48,26 @@ public class ClientController {
         this.addressService = addressService;
         this.phoneService = phoneService;
         this.contactService = contactService;
+        this.statusService = statusService;
+        this.impactDirectionService = impactDirectionService;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAssignment(@RequestBody AssignmentDTO assignmentDTO) {
         Assignment assignment = new Assignment();
+
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDetails.getUser();
         assignment.setClient(user);
         assignment.setNote(assignmentDTO.getAssignmentNote());
         assignment.setDateOfIncident(assignmentDTO.getDateOfIncident());
+        assignment.setStatus(statusService.findById(1));
 
         if (assignmentDTO.getVehicleInformation() != null) {
             VehicleInformationDTO originalVehicleInformation = assignmentDTO.getVehicleInformation();
             VehicleInformation processedVehicleInformation = new VehicleInformation();
             processedVehicleInformation.setVin(originalVehicleInformation.getVin());
+            processedVehicleInformation.setModel(originalVehicleInformation.getModel());
             processedVehicleInformation.setYear(originalVehicleInformation.getYear());
             processedVehicleInformation.setMakeIn(originalVehicleInformation.getMakeIn());
             processedVehicleInformation.setLicensePart(originalVehicleInformation.getLicensePart());
@@ -74,7 +82,17 @@ public class ClientController {
             VehicleConditionDTO originalVehicleCondition = assignmentDTO.getVehicleCondition();
             VehicleCondition processedVehicleCondition = new VehicleCondition();
             processedVehicleCondition.setAssignment(assignment);
-            processedVehicleCondition.setImpact_direction(ImpactDirection.valueOf(originalVehicleCondition.getImpact_direction()));
+            List<ImpactDirection> listForSave = new ArrayList<>();
+            if(!originalVehicleCondition.getImpactDirections().isEmpty()) {
+                for (ImpactDirectionDTO impactDirectionDTO : originalVehicleCondition.getImpactDirections()) {
+                    ImpactDirection impactDirection = new ImpactDirection();
+                    impactDirection.setName(NameOfImpactDirection.valueOf(impactDirectionDTO.getName()));
+                    impactDirection.setVehicleCondition(processedVehicleCondition);
+                    impactDirectionService.save(impactDirection);
+                    listForSave.add(impactDirection);
+                }
+            }
+            processedVehicleCondition.setImpact_directions(listForSave);
             processedVehicleCondition.setPhotos(originalVehicleCondition.getPhotos().toString());//заглушка
             assignment.setVehicleCondition(processedVehicleCondition);
             vehicleConditionService.save(processedVehicleCondition);
@@ -91,10 +109,7 @@ public class ClientController {
                 processedContact.setAssignment(assignment);
                 TypeOfContact typeOfContactForSave = typeOfContactService.findByName(originalContact.getTypeOfContact().getNameOfType());
                 processedContact.setTypeOfContact(typeOfContactForSave);
-                processedContact.setFirstname(originalContact.getFirstname());
-                processedContact.setLastname(originalContact.getLastname());
                 processedContact.setEmail(originalContact.getEmail());
-                processedContact.setNote(originalContact.getNote());
 
                 for (PhoneDTO phone : originalContact.getPhones()) {
                     Phone phoneForSave = new Phone(processedContact,
@@ -112,7 +127,7 @@ public class ClientController {
                             address.getCity(),
                             address.getState(),
                             address.getZip(),
-                            address.getNote(),
+                            address.getAddressLine(),
                             TypeOfAddress.valueOf(address.getTypeOfAddress()));
                     listOfAddresses.add(addressForSave);
                     addressService.save(addressForSave);

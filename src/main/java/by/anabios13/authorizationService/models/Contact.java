@@ -2,7 +2,6 @@ package by.anabios13.authorizationService.models;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "contacts")
@@ -36,9 +35,6 @@ public class Contact {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "note")
-    private String note;
-
     public Contact(){}
 
     public Contact(Assignment assignment,
@@ -47,8 +43,7 @@ public class Contact {
                    List<Address> addresses,
                    String firstname,
                    String lastname,
-                   String email,
-                   String note) {
+                   String email) {
         this.assignment = assignment;
         this.typeOfContact = typeOfContact;
         this.phones = phones;
@@ -56,20 +51,6 @@ public class Contact {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.note = note;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Contact contact = (Contact) o;
-        return Objects.equals(assignment, contact.assignment) && Objects.equals(typeOfContact, contact.typeOfContact) && Objects.equals(firstname, contact.firstname) && Objects.equals(lastname, contact.lastname) && Objects.equals(email, contact.email) && Objects.equals(note, contact.note);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(assignment, typeOfContact, firstname, lastname, email, note);
     }
 
     public List<Address> getAddresses() {
@@ -134,13 +115,5 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 }
