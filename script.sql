@@ -52,7 +52,7 @@ create table vehicle_information
     make_in                varchar(100),
     license_part           varchar(50)  not null,
     license_state          varchar(100) not null,
-    license_expiration     date         not null,
+    license_expiration     timestamp    not null,
     odometer_value         integer
         constraint vehicle_information_odometer_value_check
             check (odometer_value >= 0),
@@ -80,20 +80,20 @@ create table assignment
         references users
             on delete cascade,
     status_id              integer
-                                references status
-                                    on delete set null,
+                                     references status
+                                         on delete set null,
     price                  numeric(9, 2)
         constraint assignment_price_check
             check (price >= (0)::numeric),
     note                   varchar(500),
-    date_of_incident       date not null,
+    date_of_incident       timestamp not null,
     vehicle_information_id integer
-                                references vehicle_information
-                                    on delete set null,
+                                     references vehicle_information
+                                         on delete set null,
     supplement_id          integer,
     vehicle_condition_id   integer
-                                references vehicle_condition
-                                    on delete set null
+                                     references vehicle_condition
+                                         on delete set null
 );
 
 alter table assignment
@@ -242,7 +242,6 @@ create table impact_direction
 
 alter table impact_direction
     owner to postgres;
-
 
 SELECT setval(assignment_assignment_id_seq, 10000000);
 
