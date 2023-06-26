@@ -16,7 +16,7 @@ public class VehicleInformation {
     private Assignment assignment;
 
     @Column(name = "vin")
-    private int vin;
+    private String vin;
 
     @Column(name = "year")
     private int year;
@@ -78,11 +78,11 @@ public class VehicleInformation {
         this.assignment = assignment;
     }
 
-    public int getVin() {
+    public String getVin() {
         return vin;
     }
 
-    public void setVin(int vin) {
+    public void setVin(String vin) {
         this.vin = vin;
     }
 

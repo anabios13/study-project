@@ -3,7 +3,7 @@ package by.anabios13.authorizationService.dto;
 import java.util.Date;
 
 public class VehicleInformationDTO {
-    private int vin;
+    private String vin;
 
     private int year;
 
@@ -29,11 +29,11 @@ public class VehicleInformationDTO {
         this.model = model;
     }
 
-    public int getVin() {
+    public String getVin() {
         return vin;
     }
 
-    public void setVin(int vin) {
+    public void setVin(String vin) {
         this.vin = vin;
     }
 
@@ -85,7 +85,7 @@ public class VehicleInformationDTO {
         this.odometerValue = odometerValue;
     }
 
-    public VehicleInformationDTO(int vin, int year, String makeIn, String licensePart, String licenseState, Date licenseExpiration, int odometerValue) {
+    public VehicleInformationDTO(String vin, int year, String makeIn, String licensePart, String licenseState, Date licenseExpiration, int odometerValue) {
         this.vin = vin;
         this.year = year;
         this.makeIn = makeIn;
