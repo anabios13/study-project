@@ -243,7 +243,7 @@ create table impact_direction
 alter table impact_direction
     owner to postgres;
 
-SELECT setval(assignment_assignment_id_seq, 10000000);
+SELECT setval('assignment_assignment_id_seq', 10000000);
 
 insert into role (role_id, name_of_role)
 values (1, 'ROLE_Client'),
