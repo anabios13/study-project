@@ -6,8 +6,6 @@ import by.anabios13.authorizationService.models.User;
 import by.anabios13.authorizationService.repository.UserRepository;
 import by.anabios13.authorizationService.security.JWTUtil;
 import by.anabios13.authorizationService.services.AuthorizationService;
-import by.anabios13.authorizationService.services.UserDetailsService;
-import by.anabios13.authorizationService.services.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

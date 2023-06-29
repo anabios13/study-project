@@ -1,4 +1,4 @@
-package by.anabios13.authorizationService.services;
+package by.anabios13.authorizationService.services.modelServices;
 
 import by.anabios13.authorizationService.models.VehicleInformation;
 import by.anabios13.authorizationService.repository.VehicleInformationRepository;

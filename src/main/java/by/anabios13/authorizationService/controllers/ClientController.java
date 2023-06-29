@@ -6,7 +6,7 @@ import by.anabios13.authorizationService.models.TypeOfAddress;
 import by.anabios13.authorizationService.models.TypeOfContact;
 import by.anabios13.authorizationService.models.TypeOfPhone;
 import by.anabios13.authorizationService.services.NewAssignmentService;
-import by.anabios13.authorizationService.services.TypeOfContactService;
+import by.anabios13.authorizationService.services.modelServices.TypeOfContactService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
