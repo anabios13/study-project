@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -27,7 +26,7 @@ private final TypeOfContactService typeOfContactService;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createAssignment(@RequestBody AssignmentDTO assignmentDTO) {
+    public ResponseEntity<?> createAssignment(@RequestBody AssignmentDTO assignmentDTO) {
        return newAssignmentService.createAssignment(assignmentDTO);
     }
 
