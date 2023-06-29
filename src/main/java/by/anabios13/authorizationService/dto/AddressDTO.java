@@ -1,9 +1,5 @@
 package by.anabios13.authorizationService.dto;
 
-import by.anabios13.authorizationService.mappers.DTOMapper;
-import by.anabios13.authorizationService.models.Address;
-import org.modelmapper.ModelMapper;
-
 public class AddressDTO {
 
     private String city;

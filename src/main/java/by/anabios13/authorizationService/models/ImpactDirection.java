@@ -1,7 +1,6 @@
 package by.anabios13.authorizationService.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "impact_direction")

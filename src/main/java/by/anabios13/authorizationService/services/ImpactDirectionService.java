@@ -5,7 +5,6 @@ import by.anabios13.authorizationService.repository.ImpactDirectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Table;
 import java.util.Optional;
 
 

@@ -1,15 +1,19 @@
 package by.anabios13.authorizationService.controllers;
 
-import by.anabios13.authorizationService.dto.*;
+import by.anabios13.authorizationService.dto.AssignmentDTO;
 import by.anabios13.authorizationService.models.NameOfImpactDirection;
 import by.anabios13.authorizationService.models.TypeOfAddress;
 import by.anabios13.authorizationService.models.TypeOfContact;
 import by.anabios13.authorizationService.models.TypeOfPhone;
-import by.anabios13.authorizationService.services.*;
+import by.anabios13.authorizationService.services.NewAssignmentService;
+import by.anabios13.authorizationService.services.TypeOfContactService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
