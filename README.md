@@ -1,2 +1,1 @@
-Full RESR API for insurance company
-authorization using JWT token
+Full RESR API for insurance company. Authorization using JWT token
