@@ -22,14 +22,23 @@ Repair facility – affiliated repair center that provides estimates for assigne
 repairs.
 
 Client:
+
 ● Login in to the system
+
 ● View client specific incidents history and their current status
+
 ● By specific insurance (for now let’s say that client already has insurance associated with him)
+
 ● Create new unassigned case
+
 o Provide vehicle VIN number and vehicle information
+
 o Provide text description of damages
+
 o Provide photos for new case
+
 o Provide contact information
+
 
 Insurance Company:
 
