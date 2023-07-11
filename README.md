@@ -1,4 +1,4 @@
-Full RESR API for insurance company. Authorization using JWT token.
+Full REST API for insurance company. Authorization using JWT token.
 
 Case\Assignment – main work entity unique for each insurance case that describes the vehicle, contact information, estimates and any supplements along with final results.
 
