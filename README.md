@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/6c2bb1da-7366-4d68-9d41-5a24fa8f8e5a)
+![image](https://github.com/user-attachments/assets/cb79b1a0-768d-40ea-b887-7c8446506db0)
+
+
 Full REST API for insurance company. Authorization using JWT token.
 
 Case\Assignment – main work entity unique for each insurance case that describes the vehicle, contact information, estimates and any supplements along with final results.
